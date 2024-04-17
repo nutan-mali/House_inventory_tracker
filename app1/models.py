@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class House(models.Model):
     name = models.CharField(max_length=100)
+    num_rooms = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Room(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='rooms')
