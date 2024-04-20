@@ -7,6 +7,9 @@ class House(models.Model):
     num_rooms = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 class Room(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='rooms')
     name = models.CharField(max_length=100)
@@ -16,3 +19,6 @@ class Room(models.Model):
     maintenance_date = models.DateField()
     discard_date = models.DateField()
     insurance_policy_number = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
