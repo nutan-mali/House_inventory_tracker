@@ -25,17 +25,14 @@
             </tr>
         </thead>
         <tbody>
-    {% for i in houses %}
+    {% for i in data_list %}
     <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ i.name }}</td>
         <td>{{ i.num_rooms }}</td>
         
         </tr>
-       {% comment %} {% for item in rooms  %} 
-       <p> {{ item.room_name }}
-       <p> {{ item.equipment_name }}
-       {% endfor %} {% endcomment %}
+      
         {% endfor %}
         </tbody>
     </table>

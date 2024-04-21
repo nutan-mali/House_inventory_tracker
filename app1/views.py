@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .forms import HouseCreateForm, RoomCreateForm
+from .forms import RoomCreateForm, HouseCreateForm
 from .models import House, Room
 
 # Create your views here.
@@ -49,21 +49,34 @@ def LogoutPage(request):
 @login_required(login_url='login')
 def house(request):
     if request.method == 'POST':
-        form = HouseCreateForm(request.POST)
+        data = HouseCreateForm(request.POST)
+        if data.is_valid():
+            data.instance.user = request.user
+            data.save()
+            return redirect('house_list')
+    else:
+        data = HouseCreateForm()
+    return render(request, 'house_create.html', {'form': data})
+
+def house_list(request):
+    data_list = House.objects.filter(user=request.user)
+    return render(request, 'house_list.html', {'data_list': data_list})
+
+
+
+# @login_required(login_url='login')
+def room(request):
+    
+    if request.method == 'POST':
+        form = RoomCreateForm(request.POST)
+        print(request.POST)
         if form.is_valid():
             form.instance.user = request.user
             form.save()
-            return redirect('house_list')
+        return HttpResponse('Works POST form')
     else:
-        form = HouseCreateForm()
-    return render(request, 'house_create.html', {'form': form})
-
-def house_list(request):
-    houses = House.objects.filter(user=request.user)
-    return render(request, 'house_list.html', {'houses': houses})
-
-
-
-
-# def room(request):
-#     pass
+        return render(request, 'room_create.html', {'form': form})
+def room_list(requst):
+    rooms = Room.objects.all()
+    return render(requst, 'room_create.html', {'form' : "form"})
+ 
