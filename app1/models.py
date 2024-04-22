@@ -12,6 +12,7 @@ class House(models.Model):
 
 class Room(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='rooms')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100)
     equipment_name = models.CharField(max_length=100)
     purchase_date = models.DateField(default=timezone.now)

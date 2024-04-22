@@ -17,14 +17,9 @@ def SignupPage(request):
         if pass1!=pass2:
             return HttpResponse("Your password and confrom password are not Same!!")
         else:
-
             my_user=User.objects.create_user(uname,email,pass1)
             my_user.save()
             return redirect('login')
-        
-
-
-
     return render (request,'signup.html')
 
 def LoginPage(request):
@@ -45,7 +40,6 @@ def LogoutPage(request):
     logout(request)
     return redirect('login')
 
-
 @login_required(login_url='login')
 def house(request):
     if request.method == 'POST':
@@ -57,26 +51,26 @@ def house(request):
     else:
         data = HouseCreateForm()
     return render(request, 'house_create.html', {'form': data})
-
 def house_list(request):
     data_list = House.objects.filter(user=request.user)
     return render(request, 'house_list.html', {'data_list': data_list})
 
 
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def room(request):
-    
+    form = RoomCreateForm()
+    rooms = Room.objects.filter(user=request.user)  # Initial list of rooms to display
     if request.method == 'POST':
-        form = RoomCreateForm(request.POST)
+        data = RoomCreateForm(request.POST)
         print(request.POST)
-        if form.is_valid():
-            form.instance.user = request.user
-            form.save()
-        return HttpResponse('Works POST form')
-    else:
-        return render(request, 'room_create.html', {'form': form})
-def room_list(requst):
-    rooms = Room.objects.all()
-    return render(requst, 'room_create.html', {'form' : "form"})
+        if data.is_valid():
+            print("validation testing")
+            data.instance.user = request.user
+            data.save()
+            print("data save")
+            rooms = Room.objects.all() 
+            return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
+    return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
+    
  

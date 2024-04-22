@@ -21,6 +21,7 @@
                   <h3 class="alert alert-warning text-center">create house Form</h3>
       <form  method="post">
         {% csrf_token %}
+        
           {{form.as_p}}
           
           <input type="submit" value="Submit" class="btn btn-primary">
