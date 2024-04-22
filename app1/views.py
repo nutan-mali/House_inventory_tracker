@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,HttpResponse, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -76,4 +76,21 @@ def room(request):
             print("Form has errors:", data.errors)
     return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
     
- 
+
+
+def room_report(request, house_pk):
+    # Get the house object or return 404 if not found
+    house = get_object_or_404(House, pk=house_pk, user=request.user)
+
+    # Get all rooms for the house
+    rooms = Room.objects.filter(house=house)
+
+    # Fetch equipment for each room using related managers
+    for room in rooms:
+        print("rooms")
+        room.equipment_list = room.equipment_name.split(",")  # Assuming equipment_name is a comma-separated list
+        print(room.equipment_name)
+        print(room.purchase_date)
+
+    return render(request, 'room_report.html', {'house': house, 'rooms': rooms})
+          

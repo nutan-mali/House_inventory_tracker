@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Report</title>
+</head>
+<body>
+    
+    
+<h1>Room Report for House: {{ house.name }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Room Name</th>
+                <th>Equipment</th>
+                <th>Purchase date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.name }}</td>
+                <td>
+                    <ul>
+                        {% for item in room.equipment_list %}
+                        
+                        <li>{{ room.equipment_name }}</li> <br>
+                        <li>{{ room.purchase_date }}</li>
+                      
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+</body>
+</html>
