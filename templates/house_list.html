@@ -36,14 +36,8 @@
         {% endfor %}
         </tbody>
     </table>
-    <form method="post" action="{% url 'room_report'  %}">  {% csrf_token %}
-      <select name="house_id">
-        {% for house in houses %}
-        <option value="{{ house.pk }}">{{ house.name }}</option>
-        {% endfor %}
-      </select>
-      <input type="submit" value="View Rooms">
-    </form>
+   
+     
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
