@@ -93,4 +93,18 @@ def room_report(request, house_pk):
         print(room.purchase_date)
 
     return render(request, 'room_report.html', {'house': house, 'rooms': rooms})
-          
+
+# views.py
+
+
+def maintenance_report(request):
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+       
+        equipment_list = Room.objects.filter(maintenance_date__range=[start_date, end_date])
+
+        return render(request, 'maintenance_report.html', {'equipment_list': equipment_list})
+    else:
+        return render(request, 'maintenance_input_form.html')
