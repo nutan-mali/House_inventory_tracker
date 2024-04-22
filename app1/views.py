@@ -65,12 +65,15 @@ def room(request):
         data = RoomCreateForm(request.POST)
         print(request.POST)
         if data.is_valid():
+            print(data.errors)
             print("validation testing")
             data.instance.user = request.user
             data.save()
             print("data save")
             rooms = Room.objects.all() 
             return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
+        else:
+            print("Form has errors:", data.errors)
     return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
     
  

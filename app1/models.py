@@ -15,7 +15,7 @@ class Room(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100)
     equipment_name = models.CharField(max_length=100)
-    purchase_date = models.DateField(default=timezone.now)
+    purchase_date = models.DateField()
     maintenance_schedule = models.CharField(choices=[('monthly', 'Monthly'), ('yearly', 'Yearly'), ('weekly', 'Weekly')], max_length=10)
     maintenance_date = models.DateField()
     discard_date = models.DateField()
