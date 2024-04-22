@@ -9,6 +9,7 @@ from .models import House, Room
 
 def SignupPage(request):
     if request.method=='POST':
+        # Extract data from the POST request
         uname=request.POST.get('username')
         email=request.POST.get('email')
         pass1=request.POST.get('password1')
@@ -17,6 +18,7 @@ def SignupPage(request):
         if pass1!=pass2:
             return HttpResponse("Your password and confrom password are not Same!!")
         else:
+             # Create a new user and save it to the database
             my_user=User.objects.create_user(uname,email,pass1)
             my_user.save()
             return redirect('login')
@@ -24,12 +26,15 @@ def SignupPage(request):
 
 def LoginPage(request):
     if request.method=='POST':
+        # Extract data from the POST request
         username=request.POST.get('username')
         pass1=request.POST.get('pass')
+        # Authenticate the user
         user=authenticate(request,username=username,password=pass1)
         if user is not None:
             login(request,user)
             print(user)
+            # Login the user and redirect to the home page (Here 'house' is the home page)
             return redirect('house')
         else:
             return HttpResponse ("Username or Password is incorrect!!!")
@@ -43,12 +48,16 @@ def LogoutPage(request):
 @login_required(login_url='login')
 def house(request):
     if request.method == 'POST':
+        # Process form submission for creating a new hous
         data = HouseCreateForm(request.POST)
         if data.is_valid():
+            # Assign the current user to the house instance and save
             data.instance.user = request.user
             data.save()
+            # Redirect to the house list page after successful creation
             return redirect('house_list')
     else:
+        # Display an empty form for creating a new house
         data = HouseCreateForm()
     return render(request, 'house_create.html', {'form': data})
 def house_list(request):
@@ -59,17 +68,22 @@ def house_list(request):
 
 @login_required(login_url='login')
 def room(request):
+    # Initialize the room creation form
     form = RoomCreateForm()
+    # Get the initial list of rooms associated with the current user
     rooms = Room.objects.filter(user=request.user)  # Initial list of rooms to display
     if request.method == 'POST':
+         # Process form submission for creating a new room
         data = RoomCreateForm(request.POST)
         print(request.POST)
         if data.is_valid():
             print(data.errors)
             print("validation testing")
+            # Assign the current user to the room instance and save
             data.instance.user = request.user
             data.save()
             print("data save")
+             # Update the rooms list to include the newly created room
             rooms = Room.objects.all() 
             return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
         else:
@@ -99,12 +113,13 @@ def room_report(request, house_pk):
 
 def maintenance_report(request):
     if request.method == 'POST':
+        # Get the start date and end date from the form data
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
 
-       
+       # Query the Room model to get equipment within the specified date range
         equipment_list = Room.objects.filter(maintenance_date__range=[start_date, end_date])
-
+# Render the maintenance report template with the equipment list data
         return render(request, 'maintenance_report.html', {'equipment_list': equipment_list})
     else:
         return render(request, 'maintenance_input_form.html')
