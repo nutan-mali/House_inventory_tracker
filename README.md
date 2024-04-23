@@ -33,7 +33,7 @@ Access the application at http://localhost:8000/ in your web browser.
    
    http://localhost:8000/create_room/
    
-  http://localhost:8000/room_report/<int:house_pk>/
+  http://localhost:8000/room_report/ <int:house_pk>/
     
   http://localhost:8000/maintenance_report/
 
