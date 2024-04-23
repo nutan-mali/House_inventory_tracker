@@ -20,6 +20,10 @@ Start the development server:   python manage.py runserver
 
 Access the application at http://localhost:8000/ in your web browser.
 
+# Check URLs :
+
+
+
 # Directory Structure
 
 house_inventory/: Main project directory.
