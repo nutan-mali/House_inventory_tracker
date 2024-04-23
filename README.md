@@ -4,4 +4,22 @@ This Django project is designed to manage houses, rooms, and equipment inventory
 
 # Setup Instructions
 
-Clone the repository:
+Clone the repository:  git clone https://github.com/yourusername/house_inventory.git
+
+Install dependencies:  cd house_inventory
+pip install -r requirements.txt
+
+Run migrations: 
+
+python manage.py migrate
+
+Create a superuser (admin) to access the admin panel:
+
+
+python manage.py createsuperuser
+
+
+Start the development server:
+
+python manage.py runserver
+
