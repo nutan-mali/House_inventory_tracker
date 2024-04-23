@@ -22,6 +22,20 @@ Access the application at http://localhost:8000/ in your web browser.
 
 # Check URLs :
 
+ http://localhost:8000/
+   http://localhost:8000/'login/
+   
+   http://localhost:8000/'logout/
+
+   
+   http://localhost:8000/house/
+   http://localhost:8000/house_list/
+   
+   http://localhost:8000/create_room/
+   
+  http://localhost:8000/room_report/<int:house_pk>/
+    
+  http://localhost:8000/maintenance_report/
 
 
 # Directory Structure
