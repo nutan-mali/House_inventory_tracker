@@ -85,6 +85,7 @@ def room(request):
             print("data save")
              # Update the rooms list to include the newly created room
             rooms = Room.objects.all() 
+           
             return render(request, 'room_create.html', {'form': form, 'rooms': rooms})
         else:
             print("Form has errors:", data.errors)
@@ -105,8 +106,9 @@ def room_report(request, house_pk):
         room.equipment_list = room.equipment_name.split(",")  # Assuming equipment_name is a comma-separated list
         print(room.equipment_name)
         print(room.purchase_date)
-
-    return render(request, 'room_report.html', {'house': house, 'rooms': rooms})
+        
+    return render(request, 'room_report.html', {'house': house, 
+                    'rooms': rooms})
 
 # views.py
 
@@ -119,7 +121,8 @@ def maintenance_report(request):
 
        # Query the Room model to get equipment within the specified date range
         equipment_list = Room.objects.filter(maintenance_date__range=[start_date, end_date])
+        context = {'equipment_list': equipment_list}
 # Render the maintenance report template with the equipment list data
-        return render(request, 'maintenance_report.html', {'equipment_list': equipment_list})
+        return render(request, 'maintenance_report.html',context )
     else:
         return render(request, 'maintenance_input_form.html')
