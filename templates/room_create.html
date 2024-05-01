@@ -43,7 +43,7 @@
                 {% for room in rooms %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ room.house.name }}</td>
+                    <td><a href="{% url 'room_report' house_id=room.house.id %}">{{ room.house.name }}</td>
                     <td>{{ room.name }}</td>
                     <td>{{ room.equipment_name }}</td>
                     <td>{{ room.purchase_date }}</td>
